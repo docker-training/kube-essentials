@@ -39,7 +39,7 @@ create_NFS_mount ()
 # Creating NFS Mount Point on worker nodes
 for node in node1 node2
 do
-    ssh -t ubuntu@$node "sudo apt-get -y install nfs-common && sudo mkdir -p /mnt/nfs_share && sudo mount master:/data /mnt/nfs_share"
+    ssh -i ~/labkey -t ubuntu@$node "sudo apt-get -y install nfs-common && sudo mkdir -p /mnt/nfs_share && sudo mount master:/data /mnt/nfs_share"
 done
 }
 
