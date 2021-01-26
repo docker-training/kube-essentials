@@ -16,20 +16,21 @@ create_NFS_service()
 {
 
 # Installing NFS server packages
-apt-get -y install nfs-kernel-server rpcbind
+  apt update
+  apt-get -y install nfs-kernel-server rpcbind
 
 # Creating directory to share with cluster nodes
-mkdir /data
-chown -R nobody:nogroup /data
-chmod 777 /data
+  mkdir /data
+  chown -R nobody:nogroup /data
+  chmod 777 /data
 
 # Exporting /data directory
-echo "/data  node1(rw,sync,no_subtree_check)" > /etc/exports
-echo "/data  node2(rw,sync,no_subtree_check)" >> /etc/exports
-exportfs -a
+  echo "/data  node1(rw,sync,no_subtree_check)" > /etc/exports
+  echo "/data  node2(rw,sync,no_subtree_check)" >> /etc/exports
+  exportfs -a
 
 # Restarting NFS server for sharing the /data directory over NFS
-systemctl restart nfs-kernel-server
+  systemctl restart nfs-kernel-server
 
 }
 
@@ -39,7 +40,12 @@ create_NFS_mount ()
 # Creating NFS Mount Point on worker nodes
 for node in node1 node2
 do
-    ssh -t ubuntu@$node "sudo apt-get -y install nfs-common && sudo mkdir -p /mnt/nfs_share && sudo mount master:/data /mnt/nfs_share"
+    scp /etc/hosts ubuntu@$node:~/
+    ssh -t ubuntu@$node "sudo mv -f ~/hosts /etc/hosts && \
+                         sudo apt update && \
+                         sudo apt-get -y install nfs-common && \
+                         sudo mkdir -p /mnt/nfs_share && \
+                         sudo mount master:/data /mnt/nfs_share"
 done
 }
 
