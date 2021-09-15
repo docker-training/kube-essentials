@@ -10,7 +10,7 @@ echo "Running: $0 $@" >> .install.log
 
 # Set defaults
 #USER=${1:-$SUDO_USER}
-DCKRV=${2:-5:19.03.12~3-0~ubuntu-bionic}
+DCKRV=${2:-5:20.10.8~3-0~ubuntu-bionic}
 
 docker_install()
 {
@@ -21,8 +21,8 @@ docker_install()
   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
 	  $(lsb_release -cs) \
 	  stable"
-  apt-get update
-  apt-get install -y docker-ce=$DCKRV docker-ce-cli=$DCKRV containerd.io
+  apt update
+  apt install -y docker-ce=$DCKRV docker-ce-cli=$DCKRV containerd.io
 }
 
 docker_add_group()
