@@ -9,7 +9,7 @@ echo "Running: $0 $@" >> .install.log
 
 # https://packages.cloud.google.com/apt/dists/kubernetes-xenial/main/binary-amd64/Packages
 K8SCNI="0.8.7-00"
-K8SVER="1.22.1-00"
+K8SVER="1.25.0-00"
 
 # https://kubernetes.io/docs/setup/independent/install-kubeadm/
 # -------------------------------------------------------------

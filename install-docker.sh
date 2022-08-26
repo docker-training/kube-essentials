@@ -30,6 +30,16 @@ docker_add_group()
     usermod -aG docker ubuntu
 }
 
+containerd_setup()
+{
+  cat << EOF > /etc/containerd/config.toml
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+    SystemdCgroup = true
+EOF
+  systemctl restart containerd 
+}
+
 #docker_customize()
 #{
     # Nice to have: make sure if dockerd is restarted it won't kill k8s
@@ -45,6 +55,7 @@ docker_add_group()
 #}
 
 docker_install $DCKRV
+conainerd_setup
 docker_add_group
 docker info
 echo
