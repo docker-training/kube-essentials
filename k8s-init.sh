@@ -1,15 +1,11 @@
 # Initialize the cluster! 
 sudo systemctl enable kubelet
-# set token for easy reuse later:
-token=$(kubeadm token generate)
 
 #init kubernetes
-sudo kubeadm init --token $token \
-    --kubernetes-version 1.26.1 \
-    --upload-certs \
-    --apiserver-advertise-address $PrivateIP \
-    --pod-network-cidr 192.168.0.0/16 \
-    --cri-socket /run/cri-dockerd.sock 
+sudo kubeadm init --token-ttl 36h \
+    --kubernetes-version 1.28.1 \
+    --control-plane-endpoint=${PublicIP} \
+    --pod-network-cidr 192.168.0.0/16
 
 # export config
 export KUBECONFIG=/etc/kubernetes/admin.conf
