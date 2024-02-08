@@ -41,3 +41,5 @@ curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${package_version}/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 apt-get update
 apt-get install -y kubelet="${k8s_version}-1.1" kubeadm="${k8s_version}-1.1" kubectl="${k8s_version}-1.1"
+
+systemctl kubelet enable
