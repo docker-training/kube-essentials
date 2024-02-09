@@ -43,3 +43,4 @@ apt-get update
 apt-get install -y kubelet="${k8s_version}-1.1" kubeadm="${k8s_version}-1.1" kubectl="${k8s_version}-1.1"
 
 systemctl enable kubelet
+systemctl restart kubelet
