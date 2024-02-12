@@ -45,7 +45,7 @@ do
                          sudo apt update && \
                          sudo apt -y install nfs-common && \
                          sudo mkdir -p /mnt/nfs_share && \
-                         sudo mount master:/data /mnt/nfs_share"
+                         sudo mount control0:/data /mnt/nfs_share"
 done
 }
 
