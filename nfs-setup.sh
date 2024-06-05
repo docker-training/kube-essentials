@@ -16,8 +16,8 @@ create_NFS_service()
 {
 
   # Installing NFS server packages
-  apt update
-  apt -y install nfs-kernel-server rpcbind
+  DEBIAN_FRONTEND=noninteractive apt update
+  DEBIAN_FRONTEND=noninteractive apt -yq install nfs-kernel-server rpcbind
 
   # Creating directory to share with cluster nodes
   mkdir /data
@@ -42,8 +42,8 @@ for node in node1 node2
 do
     scp /etc/hosts ubuntu@$node:~/
     ssh -t ubuntu@$node "sudo mv -f ~/hosts /etc/hosts && \
-                         sudo apt update && \
-                         sudo apt -y install nfs-common && \
+                         sudo DEBIAN_FRONTEND=noninteractive apt update && \
+                         sudo DEBIAN_FRONTEND=noninteractive apt -yq install nfs-common && \
                          sudo mkdir -p /mnt/nfs_share && \
                          sudo mount master:/data /mnt/nfs_share"
 done
