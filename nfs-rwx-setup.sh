@@ -67,7 +67,7 @@ for node in $(kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.typ
         log "NFS client installed on local server node: $node"
     else
         # Install on remote worker nodes
-        ssh -i ~/labkey -o StrictHostKeyChecking=no ubuntu@$node "sudo apt-get update -qq && sudo apt-get install -y nfs-common nfs-kernel-server" || warn "Failed to install NFS client on $node"
+        ssh -o StrictHostKeyChecking=no ubuntu@$node "sudo apt-get update -qq && sudo apt-get install -y nfs-common nfs-kernel-server" || warn "Failed to install NFS client on $node"
         log "NFS client installed on remote node: $node"
     fi
 
@@ -79,7 +79,7 @@ for node in $(kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.typ
             error "❌ mount.nfs helper missing on local node: $node"
         fi
     else
-        ssh -i ~/labkey -o StrictHostKeyChecking=no ubuntu@$node "test -f /sbin/mount.nfs && echo 'mount.nfs helper confirmed on $node' || echo 'mount.nfs helper missing on $node'" || warn "Could not verify mount.nfs on $node"
+        ssh -o StrictHostKeyChecking=no ubuntu@$node "test -f /sbin/mount.nfs && echo 'mount.nfs helper confirmed on $node' || echo 'mount.nfs helper missing on $node'" || warn "Could not verify mount.nfs on $node"
     fi
 done
 
